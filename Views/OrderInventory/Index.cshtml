@@ -1,0 +1,40 @@
+﻿@model ST10444262_CLDV6212_POE.Models.OrderInventory.OrderInventoryViewModel
+
+@{
+    ViewData["Title"] = "Orders & Inventory";
+}
+
+<h1>Orders and Inventory</h1>
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success">@TempData["Message"]</div>
+}
+
+<div class="row">
+    <div class="col-md-6">
+        <h3>Place Order</h3>
+        <form asp-action="SendOrder" method="post">
+            <input asp-for="Order.Customer" placeholder="Customer Name" class="form-control mb-2" />
+            <input asp-for="Order.Status" placeholder="Status" class="form-control mb-2" />
+            <button type="submit" class="btn btn-primary">Send Order</button>
+        </form>
+
+        <h5 class="mt-4">Next Order Message in Queue:</h5>
+        <pre>@Model.PeekedOrderMessage ?? "No messages"</pre>
+    </div>
+
+
+    <div class="col-md-6">
+        <h3>Update Inventory</h3>
+        <form asp-action="SendInventory" method="post">
+            <input asp-for="Inventory.ProductName" placeholder="Product Name" class="form-control mb-2" />
+            <input asp-for="Inventory.QuantityChange" type="number" placeholder="Quantity Change" class="form-control mb-2" />
+            <input asp-for="Inventory.Reason" placeholder="Reason" class="form-control mb-2" />
+            <button type="submit" class="btn btn-success">Send Inventory</button>
+        </form>
+
+        <h5 class="mt-4">Next Inventory Message in Queue:</h5>
+        <pre>@Model.PeekedInventoryMessage ?? "No messages"</pre>
+    </div>
+</div>

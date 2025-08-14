@@ -1,0 +1,89 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewData["Title"] - ST10444262_CLDV6212_POE</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/ST10444262_CLDV6212_POE.styles.css" asp-append-version="true" />
+    <style>
+      
+        .navbar-custom {
+            background: linear-gradient(90deg, #0d6efd, #6610f2);
+            box-shadow: 0 4px 12px rgba(13, 110, 253, 0.3);
+        }
+        .navbar-custom .navbar-brand {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: white;
+            letter-spacing: 0.05em;
+        }
+        .navbar-custom .nav-link {
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 500;
+            transition: color 0.3s ease;
+            padding: 0.5rem 1rem;
+        }
+        .navbar-custom .nav-link:hover,
+        .navbar-custom .nav-link.active {
+            color: #ffc107;
+        }
+        footer.footer {
+            background-color: #f8f9fa;
+            padding: 1rem 0;
+            font-size: 0.9rem;
+            color: #6c757d;
+            text-align: center;
+            box-shadow: inset 0 1px 0 #e9ecef;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-custom sticky-top">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                    ST10444262_CLDV6212_POE
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon" style="filter: invert(1);"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "Home" ? "active" : "")" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "CustomerProduct" ? "active" : "")" asp-area="" asp-controller="CustomerProduct" asp-action="Index">Customers & Products</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "Multimedia" ? "active" : "")" asp-area="" asp-controller="Multimedia" asp-action="Index">Multimedia</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "OrderInventory" ? "active" : "")" asp-area="" asp-controller="OrderInventory" asp-action="Index">Orders & Inventory</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "Contract" ? "active" : "")" asp-area="" asp-controller="Contract" asp-action="Index">Contracts</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main role="main" class="container py-4">
+        @RenderBody()
+    </main>
+
+    <footer class="footer">
+        &copy; 2025 - ST10444262_CLDV6212_POE 
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

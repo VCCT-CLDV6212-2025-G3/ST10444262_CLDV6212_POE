@@ -1,0 +1,42 @@
+﻿@model ST10444262_CLDV6212_POE.Models.Product
+
+@{
+    ViewData["Title"] = "Edit Product";
+}
+
+<div class="container mt-4">
+    <h1 class="mb-4 fw-bold"><i class="bi bi-pencil-square me-2"></i> Edit Product</h1>
+
+    <div class="card shadow-sm border-0">
+        <div class="card-body">
+            <form asp-action="EditProduct" method="post">
+                <input type="hidden" asp-for="RowKey" />
+
+                <div class="mb-3">
+                    <dt class="col-sm-3">Product Name</dt>
+                    <input asp-for="ProductName" class="form-control rounded-pill" />
+                    <span asp-validation-for="ProductName" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <dt class="col-sm-3">Product Description</dt>                   
+                    <input asp-for="ProductDescription" class="form-control rounded-pill" />
+                    <span asp-validation-for="ProductDescription" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <dt class="col-sm-3">Product Price</dt>
+                    <input asp-for="ProductPrice" class="form-control rounded-pill" />
+                    <span asp-validation-for="ProductPrice" class="text-danger"></span>
+                </div>
+
+                <button type="submit" class="btn btn-outline-warning rounded-pill px-4">
+                    <i class="bi bi-pencil-square me-2"></i> Update
+                </button>
+                <a asp-action="Index" class="btn btn-outline-secondary rounded-pill px-4 ms-2">
+                    <i class="bi bi-arrow-left me-2"></i> Cancel
+                </a>
+            </form>
+        </div>
+    </div>
+</div>

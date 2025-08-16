@@ -6,6 +6,7 @@ namespace ST10444262_CLDV6212_POE.Services
     {
         private readonly ShareClient _shareClient;
         //------------------------------------------------------------------------------------------//
+        #region Configuration
         public FileShareService(IConfiguration config)
         {
             //file storage connection
@@ -15,8 +16,14 @@ namespace ST10444262_CLDV6212_POE.Services
             _shareClient = new ShareClient(connectionString, shareName);
             _shareClient.CreateIfNotExists();
         }
+        #endregion
         //------------------------------------------------------------------------------------------//
-        //Upload a file
+        #region Upload File
+        /// <summary>
+        /// Upload a file
+        /// </summary>
+        /// <param name="file"></param>
+        /// <returns></returns>
         public async Task UploadFileAsync(IFormFile file)
         {
             if (file == null || file.Length == 0)
@@ -29,8 +36,13 @@ namespace ST10444262_CLDV6212_POE.Services
             await fileClient.CreateAsync(file.Length);
             await fileClient.UploadAsync(stream);
         }
+        #endregion
         //------------------------------------------------------------------------------------------//
-        //List
+        #region Display file
+        /// <summary>
+        /// Display
+        /// </summary>
+        /// <returns></returns>
         public async Task<List<string>> ListFilesAsync()
         {
             var directory = _shareClient.GetRootDirectoryClient();
@@ -44,8 +56,14 @@ namespace ST10444262_CLDV6212_POE.Services
 
             return files;
         }
-        //------------------------------------------------------------------------------------------//
-        //Download
+        #endregion
+        //------------------------------------------------------------------------------------------//\
+        #region Download File
+        /// <summary>
+        /// Download the file
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <returns></returns>
         public async Task<Stream> DownloadFileAsync(string fileName)
         {
             var directory = _shareClient.GetRootDirectoryClient();
@@ -53,8 +71,14 @@ namespace ST10444262_CLDV6212_POE.Services
             var download = await fileClient.DownloadAsync();
             return download.Value.Content;
         }
+        #endregion
         //------------------------------------------------------------------------------------------//
-        // Delete a file from Azure File Share
+        #region Delete File
+        /// <summary>
+        /// Delete a file from Azure File Share
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <returns></returns>
         public async Task DeleteFileAsync(string fileName)
         {
             if (string.IsNullOrWhiteSpace(fileName))
@@ -64,6 +88,7 @@ namespace ST10444262_CLDV6212_POE.Services
             var fileClient = directory.GetFileClient(fileName);
             await fileClient.DeleteIfExistsAsync();
         }
+        #endregion
     }
 }
 //---------------------END OF FILE------------------------------------------------------------------//

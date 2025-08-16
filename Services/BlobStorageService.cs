@@ -1,92 +1,72 @@
 ﻿using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
-
+using ST10444262_CLDV6212_POE.Models;
 namespace ST10444262_CLDV6212_POE.Services
 {
-
     public class BlobStorageService
     {
         private readonly BlobContainerClient _containerClient;
+        //------------------------------------------------------------------------------------------//
+        #region Configuration
         public BlobStorageService(IConfiguration config)
         {
-            //blob storage connection
+            // blob storage connection string
             var connectionString = config["AzureStorageConnectionString"];
-            //blob container name
-            string containerName = "images";
+            // blob container name for product images
+            string containerName = "product-images"; 
 
             var blobServiceClient = new BlobServiceClient(connectionString);
             _containerClient = blobServiceClient.GetBlobContainerClient(containerName);
             _containerClient.CreateIfNotExists();
         }
+        #endregion
         //------------------------------------------------------------------------------------------//
+        #region Image Upload
         /// <summary>
-        /// handles uploading a file
+        /// Uploads a new product image file.
         /// </summary>
-        /// <param name="file"></param>
-        /// <returns></returns>
-        public async Task UploadFileAsync(IFormFile file)
+        /// <param name="file">The IFormFile to upload.</param>
+        /// <param name="productID"></param>
+        /// <returns>The URL of the uploaded blob.</returns>
+        public async Task<string> UploadProductImageAsync(IFormFile file, string productID)
         {
-            var blobClient = _containerClient.GetBlobClient(file.FileName);
+            var fileName = file.FileName;
+            var blobClient = _containerClient.GetBlobClient(fileName);
+
+            // Upload the file, overwriting if it exists
             using var stream = file.OpenReadStream();
             await blobClient.UploadAsync(stream, overwrite: true);
-        }
-        //------------------------------------------------------------------------------------------//
-        /// <summary>
-        /// Handles downloading a file
-        /// </summary>
-        /// <param name="fileName"></param>
-        /// <returns></returns>
-        public async Task<Stream> DownloadFileAsync(string fileName)
-        {
-            var blobClient = _containerClient.GetBlobClient(fileName);
-            if (await blobClient.ExistsAsync())
-            {
-                var response = await blobClient.DownloadAsync();
-                return response.Value.Content;
-            }
-            return null;
-        }
-        //------------------------------------------------------------------------------------------//
-        /// <summary>
-        /// Handles getting all the files
-        /// </summary>
-        /// <returns></returns>
-        public async Task<List<string>> GetAllFilesAsync()
-        {
-            var blobs = _containerClient.GetBlobsAsync();
-            var files = new List<string>();
 
-            await foreach (BlobItem blob in blobs)
-            {
-                files.Add(blob.Name);
-            }
-
-            return files;
+            // Return the public URL of the uploaded blob
+            return blobClient.Uri.ToString();
         }
+        #endregion
         //------------------------------------------------------------------------------------------//
+        #region Delete Image
         /// <summary>
-        /// Handles the deletion of a file
+        /// Deletes a product image file.
         /// </summary>
-        /// <param name="fileName"></param>
-        /// <returns></returns>
-        public async Task DeleteFileAsync(string fileName)
+        /// <param name="fileName">The name of the file to delete.</param>
+        /// <returns>A Task representing the asynchronous operation.</returns>
+        public async Task DeleteProductImageAsync(string fileName)
         {
             var blobClient = _containerClient.GetBlobClient(fileName);
             await blobClient.DeleteIfExistsAsync();
         }
+        #endregion
         //------------------------------------------------------------------------------------------//
+        #region Display Image
         /// <summary>
-        /// Gets the blobs url to allow previews
+        /// Gets the URL of a product image file for display.
         /// </summary>
-        /// <param name="fileName"></param>
-        /// <returns></returns>
-        public string GetBlobUrl(string fileName)
+        /// <param name="fileName">The name of the file to get the URL for.</param>
+        /// <returns>The public URL of the blob.</returns>
+        public string GetProductImageUrl(string fileName)
         {
             var blobClient = _containerClient.GetBlobClient(fileName);
-            return blobClient.Uri.ToString(); // Returns the URL (public or SAS)
+            return blobClient.Uri.ToString();
         }
+        #endregion
     }
-
-
 }
 //---------------------END OF FILE------------------------------------------------------------------//

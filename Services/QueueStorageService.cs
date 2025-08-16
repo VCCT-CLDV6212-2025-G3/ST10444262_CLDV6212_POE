@@ -5,44 +5,43 @@ namespace ST10444262_CLDV6212_POE.Services
     public class QueueStorageService
     {
         private readonly QueueClient _ordersQueueClient;
-        private readonly QueueClient _inventoryQueueClient;
+
         //------------------------------------------------------------------------------------------//
+        #region Configuration
         public QueueStorageService(IConfiguration config)
         {
-            //queue storage connection 
+            //queue storage connection
             var connectionString = config["AzureStorageConnectionString"];
-            //Orders Queue
-            _ordersQueueClient = new QueueClient(connectionString, "orders");
+
+            //Orders Queue client initialization
+            _ordersQueueClient = new QueueClient(connectionString, "order-queue");
             _ordersQueueClient.CreateIfNotExists();
-            //Inventory Queue
-            _inventoryQueueClient = new QueueClient(connectionString, "inventory");
-            _inventoryQueueClient.CreateIfNotExists();
         }
+        #endregion
         //------------------------------------------------------------------------------------------//
+        #region Send Order Message
+        /// <summary>
+        /// Sends a message to the orders queue.
+        /// </summary>
+        /// <param name="message">The message to send, typically a serialized Order object.</param>
         public async Task SendOrderMessageAsync(string message)
         {
             if (!string.IsNullOrWhiteSpace(message))
                 await _ordersQueueClient.SendMessageAsync(message);
         }
+        #endregion
         //------------------------------------------------------------------------------------------//
-        public async Task SendInventoryMessageAsync(string message)
-        {
-            if (!string.IsNullOrWhiteSpace(message))
-                await _inventoryQueueClient.SendMessageAsync(message);
-        }
-        //------------------------------------------------------------------------------------------//
+        #region Peek Order Message
+        /// <summary>
+        /// Peeks the next message from the orders queue without removing it.
+        /// </summary>
+        /// <returns>The message text or null if the queue is empty.</returns>
         public async Task<string?> PeekOrderMessageAsync()
         {
             var peeked = await _ordersQueueClient.PeekMessageAsync();
             return peeked?.Value?.MessageText;
         }
-        //------------------------------------------------------------------------------------------//
-        public async Task<string?> PeekInventoryMessageAsync()
-        {
-            var peeked = await _inventoryQueueClient.PeekMessageAsync();
-            return peeked?.Value?.MessageText;
-        }
+        #endregion
     }
 }
-
 //---------------------END OF FILE------------------------------------------------------------------//

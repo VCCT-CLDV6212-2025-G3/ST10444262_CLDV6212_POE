@@ -1,0 +1,79 @@
+﻿@model IEnumerable<ST10444262_CLDV6212_POE.Models.Order>
+
+@{
+    ViewData["Title"] = "Orders & Inventory";
+    string queueMessage = ViewData["QueueMessage"] as string;
+}
+
+<div class="container mt-4">
+    <h1 class="mb-4 fw-bold"><i class="bi bi-cart-fill me-2"></i> All Orders</h1>
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <a asp-action="Create" class="btn btn-outline-success rounded-pill px-4">
+            <i class="bi bi-plus-circle-fill me-2"></i> Create New Order
+        </a>
+    </div>
+
+    @* Queue Message Display Area *@
+    <div class="card shadow-sm border-0 mb-4 p-4 bg-light">
+        <h4 class="fw-semibold mb-3"><i class="bi bi-envelope-fill me-2"></i> Latest Queue Message</h4>
+        @if (!string.IsNullOrEmpty(queueMessage))
+        {
+            <div class="alert alert-info" role="alert">
+                <p class="mb-0"><strong>Message:</strong> @queueMessage</p>
+                <small class="text-muted">This is the most recent message peeked from the queue.</small>
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-secondary" role="alert">
+                No messages currently in the queue.
+            </div>
+        }
+    </div>
+
+    <div class="card shadow-sm border-0">
+        <div class="card-header bg-primary text-white fw-semibold">
+            Order List
+        </div>
+        <div class="card-body p-0">
+            @if (Model != null && Model.Any())
+            {
+                <table class="table table-hover mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>@Html.DisplayNameFor(model => model.OrderID)</th>
+                            <th>@Html.DisplayNameFor(model => model.CustomerName)</th>
+                            <th>@Html.DisplayNameFor(model => model.ProductName)</th>
+                            <th>@Html.DisplayNameFor(model => model.OrderDate)</th>
+                            <th class="text-end">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@Html.DisplayFor(modelItem => item.OrderID)</td>
+                                <td>@Html.DisplayFor(modelItem => item.CustomerName)</td>
+                                <td>@Html.DisplayFor(modelItem => item.ProductName)</td>
+                                <td>@Html.DisplayFor(modelItem => item.OrderDate)</td>
+                                <td class="text-end">
+                                    <a asp-action="Details" asp-route-rowKey="@item.RowKey" class="btn btn-outline-primary btn-sm rounded-pill me-2">
+                                        <i class="bi bi-info-circle-fill"></i> Details
+                                    </a>
+                                    <a asp-action="Delete" asp-route-rowKey="@item.RowKey" class="btn btn-outline-danger btn-sm rounded-pill">
+                                        <i class="bi bi-trash-fill"></i> Delete
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <div class="text-center p-4 text-muted">No orders found.</div>
+            }
+        </div>
+    </div>
+</div>

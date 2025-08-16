@@ -56,13 +56,13 @@
                             <a class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "Home" ? "active" : "")" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "CustomerProduct" ? "active" : "")" asp-area="" asp-controller="CustomerProduct" asp-action="Index">Customers & Products</a>
+                            <a class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "Customer" ? "active" : "")" asp-area="" asp-controller="Customer" asp-action="Index">Customer</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "Multimedia" ? "active" : "")" asp-area="" asp-controller="Multimedia" asp-action="Index">Multimedia</a>
+                            <a class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "Product" ? "active" : "")" asp-area="" asp-controller="Product" asp-action="Index">Product</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "OrderInventory" ? "active" : "")" asp-area="" asp-controller="OrderInventory" asp-action="Index">Orders & Inventory</a>
+                            <a class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "Order" ? "active" : "")" asp-area="" asp-controller="Order" asp-action="Index">Orders & Inventory</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "Contract" ? "active" : "")" asp-area="" asp-controller="Contract" asp-action="Index">Contracts</a>

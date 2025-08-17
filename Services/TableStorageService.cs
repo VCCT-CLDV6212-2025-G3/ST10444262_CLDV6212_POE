@@ -42,13 +42,20 @@ namespace ST10444262_CLDV6212_POE.Services
         #endregion
         //------------------------------------------------------------------------------------------//
         #region Customer
-        //Insert a customer
+        /// <summary>
+        /// Insert a customer
+        /// </summary>
+        /// <param name="customer"></param>
+        /// <returns></returns>
         public async Task InsertCustomerAsync(Customer customer)
         {
             await _tableClientCustomer.AddEntityAsync(customer);
         }
         //------------------------------------------------------------------------------------------//
-        //List customers
+        /// <summary>
+        /// List customers
+        /// </summary>
+        /// <returns></returns>
         public async Task<List<Customer>> GetAllCustomersAsync()
         {
             var customers = new List<Customer>();
@@ -61,19 +68,31 @@ namespace ST10444262_CLDV6212_POE.Services
             return customers;
         }
         //------------------------------------------------------------------------------------------//
-        // GET a single customer by PartitionKey and RowKey
+        /// <summary>
+        /// GET a single customer by PartitionKey and RowKey
+        /// </summary>
+        /// <param name="rowKey"></param>
+        /// <returns></returns>
         public async Task<Customer> GetCustomerAsync(string rowKey)
         {
             return await _tableClientCustomer.GetEntityAsync<Customer>("Customer", rowKey);
         }
         //------------------------------------------------------------------------------------------//
-        // UPDATE a customer
+        /// <summary>
+        /// UPDATE a customer
+        /// </summary>
+        /// <param name="customer"></param>
+        /// <returns></returns>
         public async Task UpdateCustomerAsync(Customer customer)
         {
             await _tableClientCustomer.UpsertEntityAsync(customer, TableUpdateMode.Replace);
         }
         //------------------------------------------------------------------------------------------//
-        // DELETE a customer
+        /// <summary>
+        /// DELETE a customer
+        /// </summary>
+        /// <param name="rowKey"></param>
+        /// <returns></returns>
         public async Task DeleteCustomerAsync(string rowKey)
         {
             await _tableClientCustomer.DeleteEntityAsync("Customer", rowKey);
@@ -81,13 +100,20 @@ namespace ST10444262_CLDV6212_POE.Services
         #endregion
         //------------------------------------------------------------------------------------------//
         #region Product
-        //Insert a product
+        /// <summary>
+        /// Insert a product
+        /// </summary>
+        /// <param name="product"></param>
+        /// <returns></returns>
         public async Task InsertProductAsync(Product product)
         {
             await _tableClientProduct.AddEntityAsync(product);
         }
         //------------------------------------------------------------------------------------------//
-        //List products
+        /// <summary>
+        /// List products
+        /// </summary>
+        /// <returns></returns>
         public async Task<List<Product>> GetAllProductAsync()
         {
             var products = new List<Product>();
@@ -100,19 +126,31 @@ namespace ST10444262_CLDV6212_POE.Services
             return products;
         }
         //------------------------------------------------------------------------------------------//
-        // GET a single product by PartitionKey and RowKey
+        /// <summary>
+        /// GET a single product by PartitionKey and RowKey
+        /// </summary>
+        /// <param name="rowKey"></param>
+        /// <returns></returns>
         public async Task<Product> GetProductAsync(string rowKey)
         {
             return await _tableClientProduct.GetEntityAsync<Product>("Product", rowKey);
         }
         //------------------------------------------------------------------------------------------//
-        // UPDATE a product
+        /// <summary>
+        /// UPDATE a product
+        /// </summary>
+        /// <param name="product"></param>
+        /// <returns></returns>
         public async Task UpdateProductAsync(Product product)
         {
             await _tableClientProduct.UpsertEntityAsync(product, TableUpdateMode.Replace);
         }
         //------------------------------------------------------------------------------------------//
-        // DELETE a product
+        /// <summary>
+        /// DELETE a product
+        /// </summary>
+        /// <param name="rowKey"></param>
+        /// <returns></returns>
         public async Task DeleteProductAsync(string rowKey)
         {
             await _tableClientProduct.DeleteEntityAsync("Product", rowKey);
@@ -120,13 +158,20 @@ namespace ST10444262_CLDV6212_POE.Services
         #endregion
         //------------------------------------------------------------------------------------------//
         #region Order
-        //Insert an order
+        /// <summary>
+        /// Insert an order
+        /// </summary>
+        /// <param name="order"></param>
+        /// <returns></returns>
         public async Task InsertOrderAsync(Order order)
         {
             await _tableClientOrder.AddEntityAsync(order);
         }
         //------------------------------------------------------------------------------------------//
-        //List orders
+        /// <summary>
+        /// List orders
+        /// </summary>
+        /// <returns></returns>
         public async Task<List<Order>> GetAllOrdersAsync()
         {
             var orders = new List<Order>();
@@ -137,19 +182,33 @@ namespace ST10444262_CLDV6212_POE.Services
             return orders;
         }
         //------------------------------------------------------------------------------------------//
-        // GET a single order by PartitionKey and RowKey
+        /// <summary>
+        /// GET a single order by PartitionKey and RowKey
+        /// </summary>
+        /// <param name="partitionKey"></param>
+        /// <param name="rowKey"></param>
+        /// <returns></returns>
         public async Task<Order> GetOrderAsync(string partitionKey, string rowKey)
         {
             return await _tableClientOrder.GetEntityAsync<Order>(partitionKey, rowKey);
         }
         //------------------------------------------------------------------------------------------//
-        // UPDATE an order
+        /// <summary>
+        /// UPDATE an order
+        /// </summary>
+        /// <param name="order"></param>
+        /// <returns></returns>
         public async Task UpdateOrderAsync(Order order)
         {
             await _tableClientOrder.UpsertEntityAsync(order, TableUpdateMode.Replace);
         }
         //------------------------------------------------------------------------------------------//
-        // DELETE an order
+        /// <summary>
+        /// DELETE an order
+        /// </summary>
+        /// <param name="partitionKey"></param>
+        /// <param name="rowKey"></param>
+        /// <returns></returns>
         public async Task DeleteOrderAsync(string partitionKey, string rowKey)
         {
             await _tableClientOrder.DeleteEntityAsync(partitionKey, rowKey);

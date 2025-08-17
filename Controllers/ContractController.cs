@@ -14,6 +14,10 @@ namespace ST10444262_CLDV6212_POE.Controllers
         }
         //------------------------------------------------------------------------------------------//
         #region List
+        /// <summary>
+        /// Displays a list of uploaded files
+        /// </summary>
+        /// <returns></returns>
         public async Task<IActionResult> Index()
         {
             var files = await _fileService.ListFilesAsync();
@@ -22,6 +26,11 @@ namespace ST10444262_CLDV6212_POE.Controllers
         #endregion
         //------------------------------------------------------------------------------------------//
         #region Upload
+        /// <summary>
+        ///  Uploads a file to storage
+        /// </summary>
+        /// <param name="file"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> Upload(IFormFile file)
         {
@@ -31,6 +40,11 @@ namespace ST10444262_CLDV6212_POE.Controllers
         #endregion
         //------------------------------------------------------------------------------------------//
         #region Download
+        /// <summary>
+        /// Downloads a specified file
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <returns></returns>
         public async Task<IActionResult> Download(string fileName)
         {
             var stream = await _fileService.DownloadFileAsync(fileName);
@@ -39,6 +53,11 @@ namespace ST10444262_CLDV6212_POE.Controllers
         #endregion
         //------------------------------------------------------------------------------------------//
         #region Delete
+        /// <summary>
+        /// Deletes a specified file
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(string fileName)

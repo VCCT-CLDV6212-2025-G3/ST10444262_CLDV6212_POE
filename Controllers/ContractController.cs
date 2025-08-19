@@ -34,7 +34,36 @@ namespace ST10444262_CLDV6212_POE.Controllers
         [HttpPost]
         public async Task<IActionResult> Upload(IFormFile file)
         {
-            await _fileService.UploadFileAsync(file);
+            if (file == null || file.Length == 0)
+            {
+                //Add a message for the user.
+                TempData["ErrorMessage"] = "Please select a file to upload.";
+                return RedirectToAction("Index"); 
+            }
+
+            // Define the allowed extensions
+            var allowedExtensions = new[] { ".pdf", ".docx", ".txt" };
+            var extension = Path.GetExtension(file.FileName).ToLowerInvariant();
+
+            if (string.IsNullOrEmpty(extension) || !allowedExtensions.Contains(extension))
+            {
+                // Add an error message to display on the page
+                TempData["ErrorMessage"] = "Invalid file type. Only .pdf, .docx, and .txt files are allowed.";
+                return RedirectToAction("Index");
+            }
+
+            try
+            {
+                await _fileService.UploadFileAsync(file); 
+                TempData["SuccessMessage"] = "File uploaded successfully!";
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                // Log the exception and show an error
+                TempData["ErrorMessage"] = "An error occurred during file upload.";
+            }
+
             return RedirectToAction("Index");
         }
         #endregion
